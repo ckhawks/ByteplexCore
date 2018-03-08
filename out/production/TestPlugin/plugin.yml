@@ -1,0 +1,23 @@
+name: TestPlugin
+version: 2018.3.6.1
+author: Stellaric
+main: Main
+commands:
+   kit:
+      description: Your description
+      usage: /kit
+   strike:
+      description: strike a bitch
+      usage: /strike <player>
+   menu:
+      description: get things
+      usage: /menu
+   pad:
+      description: display who is on pad
+      usage: /pad
+   setdist:
+      description: set distance for pad detection
+      usage: /setdist <int>
+   setplayers:
+      description: set max players for team
+      usage: /setplayers <int>
