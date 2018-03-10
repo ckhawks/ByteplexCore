@@ -1,4 +1,4 @@
-
+package me.ckhks.StellaricCore;
 
 import com.sk89q.worldedit.*;
 import com.sk89q.worldedit.blocks.BaseBlock;
@@ -7,7 +7,6 @@ import com.sk89q.worldedit.bukkit.BukkitUtil;
 import com.sk89q.worldedit.bukkit.BukkitWorld;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.bukkit.selections.Selection;
-import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.schematic.SchematicFormat;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import com.sk89q.worldedit.world.DataException;
@@ -81,7 +80,7 @@ public class Schematic {
 
     public static void fixSelection(Player player){
         try {
-            Guild g = Guild.getGuild(player.getUniqueId());
+            Gang g = Gang.getGuild(player.getUniqueId());
             ItemStack mat1 = g.getDecor1();
             ItemStack mat2 = g.getDecor2();
 

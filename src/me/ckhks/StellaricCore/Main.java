@@ -14,6 +14,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.dynmap.DynmapAPI;
+import org.dynmap.DynmapCore;
+import org.dynmap.bukkit.DynmapPlugin;
+import org.dynmap.markers.Marker;
+import org.dynmap.markers.MarkerAPI;
+import org.dynmap.markers.MarkerIcon;
+import org.dynmap.markers.MarkerSet;
 
 import java.util.*;
 
@@ -26,6 +33,12 @@ public class Main extends JavaPlugin implements Listener {
     boolean worldEditSupport = false;
     WorldEditPlugin worldEdit = null;
 
+    Plugin dynmap;
+    DynmapAPI dynapi;
+    MarkerAPI markerapi;
+
+    Map<Player, Marker> markers = new HashMap<>();
+
     @Override
     public void onEnable(){
         // Fired when the server enables the plugin
@@ -36,6 +49,13 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(this, this);
         playersSign = getServer().getWorlds().get(0).getBlockAt(-9, 72, 145);
         setupWorldEdit();
+
+        dynmap = getServer().getPluginManager().getPlugin("dynmap");
+        dynapi = (DynmapAPI) dynmap;
+        markerapi = dynapi.getMarkerAPI();
+
+        getServer().getConsoleSender().sendMessage("enabled dynmap support!");
+
     }
 
     private void setupWorldEdit() {
@@ -81,7 +101,7 @@ public class Main extends JavaPlugin implements Listener {
     }
 
     @EventHandler
-    public void onPlayerMove(PlayerMoveEvent e){
+    public void onPlayerMovePads(PlayerMoveEvent e){
         Location midPad = new Location(e.getPlayer().getWorld(), -8.5, 71, 141.5);
         Location L = e.getTo();
 
@@ -113,6 +133,19 @@ public class Main extends JavaPlugin implements Listener {
                 active.remove(e.getPlayer());
                 displayActiveContents();
             }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerMoveMarker(PlayerMoveEvent e){
+        Player p = e.getPlayer();
+        if(markers.containsKey(p)){
+            Marker m = markers.get(p);
+            Location loc = p.getLocation();
+            double x = loc.getX();
+            double y = loc.getY();
+            double z = loc.getZ();
+            m.setLocation(p.getWorld().getName(), x, y, z);
         }
     }
 
@@ -297,6 +330,16 @@ public class Main extends JavaPlugin implements Listener {
                         }
                     }
                 }
+            } else if(label.equalsIgnoreCase("bandit")){
+                MarkerSet set = markerapi.getMarkerSet("Points of Interest");
+                MarkerIcon ico = markerapi.getMarkerIcon("skull");
+                Location loc = player.getLocation();
+                double x = loc.getX();
+                double y = loc.getY();
+                double z = loc.getZ();
+                Marker m = set.createMarker(null, "Bandit", true, loc.getWorld().getName(), x, y, z, ico, true);
+                sender.sendMessage("Added marker id:'" + m.getMarkerID() + "' (" + m.getLabel() + ") to set '" + set.getMarkerSetID() + "'");
+                markers.put(player, m);
             }
         }
         // If the player (or console) uses our command correct, we can return true
@@ -310,8 +353,21 @@ public class Main extends JavaPlugin implements Listener {
                 ItemStack is = null;
 
                 switch(event.getName()){
-                    case "Bedrock": is = new ItemStack(Material.BEDROCK);
-                    case "Lapis Lazuli Block": is = new ItemStack(Material.LAPIS_BLOCK);
+                    case "Bedrock":
+                        is = new ItemStack(Material.BEDROCK);
+                        break;
+                    case "Lapis Lazuli Block":
+                        is = new ItemStack(Material.LAPIS_BLOCK);
+                        break;
+                    case "Quartz Block":
+                        is = new ItemStack(Material.QUARTZ_BLOCK);
+                        break;
+                    case "Prismarine Block":
+                        is = new ItemStack(Material.PRISMARINE);
+                        break;
+                    case "White Concrete Block":
+                        is = new ItemStack(Material.CONCRETE);
+                        break;
                 }
 
                 if(which == 1){
@@ -322,8 +378,11 @@ public class Main extends JavaPlugin implements Listener {
                 event.setWillClose(true);
             }
         }, this)
-                .setOption(1, new ItemStack(Material.BEDROCK, 1), "Bedrock", "this is a description")
-                .setOption(2, new ItemStack(Material.LAPIS_BLOCK, 1), "Lapis Lazuli Block", "description 2");
+                .setOption(0, new ItemStack(Material.BEDROCK, 1), "Bedrock", "this is a description")
+                .setOption(1, new ItemStack(Material.LAPIS_BLOCK, 1), "Lapis Lazuli Block", "description 2")
+                .setOption(2, new ItemStack(Material.QUARTZ_BLOCK, 1), "Quartz Block", "description 2")
+                .setOption(3, new ItemStack(Material.PRISMARINE, 1), "Prismarine Block", "description 2")
+                .setOption(4, new ItemStack(Material.CONCRETE, 1), "White Concrete Block", "description 2");
         menu.open(player);
     }
 }

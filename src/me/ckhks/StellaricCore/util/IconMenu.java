@@ -1,3 +1,5 @@
+package me.ckhks.StellaricCore;
+
 import java.util.Arrays;
 
 import org.bukkit.Bukkit;

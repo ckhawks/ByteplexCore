@@ -1,30 +1,35 @@
 name: StellaricCore
 version: 2018.3.6.1
 author: Stellaric
-main: Main
-depend: [WorldEdit]
+main: me.ckhks.StellaricCore.Main
+depend:
+  - WorldEdit
+  - dynmap
 commands:
-   kit:
-      description: Your description
-      usage: /kit
-   strike:
-      description: strike a bitch
-      usage: /strike <player>
-   menu:
-      description: get things
-      usage: /menu
-   pad:
-      description: display who is on pad
-      usage: /pad
-   setdist:
-      description: set distance for pad detection
-      usage: /setdist <int>
-   setplayers:
-      description: set max players for team
-      usage: /setplayers <int>
-   schema:
-      description: use schematics
-      usage: /schema <save/load> <name>
-   guild:
-      description: a
-      usage: /guild
+  kit:
+    description: 'Your description'
+    usage: /kit
+  strike:
+    description: 'strike a bitch'
+    usage: '/strike <player>'
+  menu:
+    description: 'get things'
+    usage: /menu
+  pad:
+    description: 'display who is on pad'
+    usage: /pad
+  setdist:
+    description: 'set distance for pad detection'
+    usage: '/setdist <int>'
+  setplayers:
+    description: 'set max players for team'
+    usage: '/setplayers <int>'
+  schema:
+    description: 'use schematics'
+    usage: '/schema <save/load> <name>'
+  guild:
+    description: a
+    usage: /guild
+  bandit:
+    description: ya
+    usage: /bandit
