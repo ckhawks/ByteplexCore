@@ -10,5 +10,7 @@
     <orderEntry type="library" name="spigot-1.12.2" level="project" />
     <orderEntry type="library" name="worldedit-bukkit-6.1.7.3" level="project" />
     <orderEntry type="library" name="worldguard-6.2.1" level="project" />
+    <orderEntry type="library" name="dynmap-2.5" level="project" />
+    <orderEntry type="library" name="WGRegionEvents-1.2.1" level="project" />
   </component>
 </module>

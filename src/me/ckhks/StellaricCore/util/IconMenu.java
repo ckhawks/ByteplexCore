@@ -1,4 +1,4 @@
-package me.ckhks.StellaricCore;
+package me.ckhks.StellaricCore.util;
 
 import java.util.Arrays;
 
