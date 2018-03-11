@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="HologramAPI_v1.6.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../HologramAPI_v1.6.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

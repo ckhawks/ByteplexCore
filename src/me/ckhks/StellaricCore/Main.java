@@ -1,5 +1,6 @@
 package me.ckhks.StellaricCore;
 
+import com.mewin.WGRegionEvents.MovementWay;
 import com.mewin.WGRegionEvents.events.RegionEnterEvent;
 import com.mewin.WGRegionEvents.events.RegionLeaveEvent;
 import com.sk89q.worldedit.regions.Region;
@@ -61,6 +62,8 @@ public class Main extends JavaPlugin implements Listener {
             getLogger().info("Failed to enable Dynmap support!");
         }
 
+        ParticleKit.setupParticleKit(this);
+
         // Register our command "kit" (set an instance of your command class as executor)
         this.getCommand("kit").setExecutor(new CommandKit());
 
@@ -70,7 +73,7 @@ public class Main extends JavaPlugin implements Listener {
         playersSign = getServer().getWorlds().get(0).getBlockAt(-9, 72, 145);
 
         NodeHandler.addNode(new Node(null, "Refinery", "Some description", NodeType.REFINERY, "factory",
-                new Location(getServer().getWorlds().get(0), -290.0, 67, 81)  ));
+                new Location(getServer().getWorlds().get(0), -290.0, 67, 81), new Location(getServer().getWorlds().get(0), -281, 68, 71), new Location(getServer().getWorlds().get(0), -287, 69, 85)));
 
     }
 
@@ -166,15 +169,170 @@ public class Main extends JavaPlugin implements Listener {
     @EventHandler
     public void onRegionEnter(RegionEnterEvent event){
         ProtectedRegion region = event.getRegion();
-        if(region.getId().equalsIgnoreCase("node1_attack")){
+        Player player = event.getPlayer();
+        Location L = player.getLocation();
 
+        // change this so that it is dynamic for nodes
+        if(region.getId().equalsIgnoreCase("node1_attack")){
+            Node node = NodeHandler.getNode("node1");
+
+            Gang gang = Gang.getGuild(player.getUniqueId());
+            if(node.getHolder() != gang || gang == null){
+                // player is not in defending guild
+
+                // data
+                node.addQueue(true, event.getPlayer());
+
+                // effects
+                ParticleKit.drawSquare(Particle.VILLAGER_ANGRY, player);
+                player.getWorld().playSound(L, Sound.BLOCK_NOTE_XYLOPHONE, 1F, 1.2F);
+
+                // chat
+                node.checkQueuing(this);
+                player.sendMessage(ChatFormat.formatExclaim(ChatLevel.NODE, "You have been added to the " + ChatColor.RED + "attackers" + ChatColor.WHITE + " queue."));
+                //displayBattleQueueInfo(node);
+            } else {
+                // player is in defending guild
+                event.setCancelled(true);
+                player.sendMessage(ChatFormat.formatExclaim(ChatLevel.NODE, "You can't attack your own node!"));
+            }
+
+        } else if(region.getId().equalsIgnoreCase("node1_defend")){
+            Node node = NodeHandler.getNode("node1");
+
+            Gang gang = Gang.getGuild(player.getUniqueId());
+            if(node.getHolder() == gang || gang == null){
+                // player is in defending guild
+
+                // data
+                node.addQueue(false, event.getPlayer());
+
+                // effects
+                ParticleKit.drawSquare(Particle.HEART, player);
+                player.getWorld().playSound(L, Sound.BLOCK_NOTE_XYLOPHONE, 1F, 1.2F);
+
+                // chat
+                node.checkQueuing(this);
+                player.sendMessage(ChatFormat.formatExclaim(ChatLevel.NODE, "You have been added to the " + ChatColor.BLUE + "defenders" + ChatColor.WHITE + " queue."));
+                //displayBattleQueueInfo(node);
+            } else {
+                // player is not in defending guild
+                event.setCancelled(true);
+                player.sendMessage(ChatFormat.formatExclaim(ChatLevel.NODE, "You are not a member of the defenders: " + gang.getName() + "."));
+            }
         }
     }
 
     @EventHandler void onRegionLeave(RegionLeaveEvent event){
         ProtectedRegion region = event.getRegion();
-        if(region.getId().equalsIgnoreCase("node1_attack")){
+        Player player = event.getPlayer();
+        Location L = player.getLocation();
 
+        // change this so that it is dynamic for nodes
+        if(region.getId().equalsIgnoreCase("node1_attack")){
+            // data
+            Node node = NodeHandler.getNode("node1");
+            node.removeQueue(true, event.getPlayer());
+
+            // effects
+            ParticleKit.drawSquare(Particle.CLOUD, player);
+            player.getWorld().playSound(L, Sound.BLOCK_FIRE_EXTINGUISH, 0.5F, 1F);
+
+            // chat
+            node.checkQueuing(this);
+            player.sendMessage(ChatFormat.formatExclaim(ChatLevel.NODE, "You have left the " + ChatColor.RED + "attackers" + ChatColor.WHITE + " queue."));
+            //displayBattleQueueInfo(node);
+        } else if(region.getId().equalsIgnoreCase("node1_defend")){
+            Node node = NodeHandler.getNode("node1");
+            node.removeQueue(false, event.getPlayer());
+
+            // effects
+            ParticleKit.drawSquare(Particle.CLOUD, player);
+            player.getWorld().playSound(L, Sound.BLOCK_FIRE_EXTINGUISH, 0.5F, 1F);
+
+            // chat
+            node.checkQueuing(this);
+            player.sendMessage(ChatFormat.formatExclaim(ChatLevel.NODE, "You have left the " + ChatColor.BLUE + "defenders" + ChatColor.WHITE + " queue."));
+            //displayBattleQueueInfo(node);
+        }
+    }
+
+    // retired, made the badly offset table.
+    // scrapped due to lack of a proper way to calculate text display width
+    public void displayBattleQueueInfo(Node node){
+        int maxLines = 3;
+
+        // defining chat strings for defenders
+        String[] defenderLines;
+        List<Player> defenders = node.getQueuedDefenders();
+
+        // if there are no defenders
+        if(defenders.size() == 0) {
+            defenderLines = new String[1];
+
+            defenderLines[0] = ChatColor.GRAY + " empty ";
+            // if the number of defenders is less than or equal to maxLines
+        } else if(defenders.size() < maxLines){
+            defenderLines = new String[defenders.size()];
+
+            for(int i = 0; i < defenders.size(); i++){
+                Player player = defenders.get(i);
+                defenderLines[i] = ChatColor.BLUE + " - " + player.getName() + " ";
+            }
+            // if the number of defenders is greater than maxLines
+        } else {
+            defenderLines = new String[maxLines];
+
+            for(int i = 0; i < maxLines; i++){
+                Player player = defenders.get(i);
+                defenderLines[i] = ChatColor.BLUE + " - " + player.getName() + " ";
+            }
+            defenderLines[3] = ChatColor.BLUE + " +" + (defenders.size() - maxLines - 1) + " more";
+        }
+
+        // defining the chat Strings for attackers
+        String[] attackerLines;
+        List<Player> attackers = node.getQueuedAttackers();
+
+        // if there are no attackers
+        if(attackers.size() == 0) {
+            attackerLines = new String[1];
+
+            attackerLines[0] = ChatColor.GRAY + " empty ";
+            // if the number of attackers is less than or equal to maxLines
+        } else if(attackers.size() < maxLines){
+            attackerLines = new String[attackers.size()];
+
+            for(int i = 0; i < attackers.size(); i++){
+                Player player = attackers.get(i);
+                attackerLines[i] = ChatColor.RED + " - " + player.getName() + " ";
+            }
+            // if the number of attackers is greater than maxLines
+        } else {
+            attackerLines = new String[maxLines];
+
+            for(int i = 0; i < maxLines; i++){
+                Player player = attackers.get(i);
+                attackerLines[i] = ChatColor.RED + " - " + player.getName();
+            }
+            attackerLines[3] = ChatColor.RED + " +" + (attackers.size() - maxLines - 1) + " more";
+        }
+
+        // drawing the actual table
+        int totalLength = 0;
+        if(attackerLines.length > defenderLines.length){
+            totalLength = attackerLines.length;
+        } else if(defenderLines.length > attackerLines.length){
+            totalLength = defenderLines.length;
+        } else if(defenderLines.length == attackerLines.length){
+            totalLength = attackerLines.length;
+        }
+
+        //
+        this.getServer().broadcastMessage(ChatColor.BLUE + " Defenders " + ChatColor.DARK_GRAY + " vs " + ChatColor.RED + " Attackers ");
+        this.getServer().broadcastMessage(ChatColor.DARK_GRAY + "------------------------");
+        for(int i = 0; i < totalLength; i++){
+            this.getServer().broadcastMessage(defenderLines[i] + ChatColor.DARK_GRAY + "|" + ChatColor.RESET + attackerLines[i]);
         }
     }
 

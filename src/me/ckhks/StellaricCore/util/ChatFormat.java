@@ -1,6 +1,12 @@
 package me.ckhks.StellaricCore.util;
 
 import org.bukkit.ChatColor;
+import org.bukkit.plugin.Plugin;
+
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class ChatFormat {
 
@@ -32,6 +38,10 @@ public class ChatFormat {
                 break;
             case ChatLevel.GANG:
                 prefix = "" + ChatColor.DARK_GREEN + " GANG " + ChatColor.RESET
+                        + ChatColor.GRAY + "»»";
+                break;
+            case ChatLevel.NODE:
+                prefix = "" + ChatColor.GRAY + " NODE " + ChatColor.RESET
                         + ChatColor.GRAY + "»»";
                 break;
         }

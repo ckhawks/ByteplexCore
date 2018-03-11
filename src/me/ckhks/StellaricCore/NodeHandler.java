@@ -20,4 +20,16 @@ public class NodeHandler {
         nodes.add(node);
     }
 
+    public static Node getNode(String identifier){
+        for(Node node : nodes){
+            if(node.getIdentifier().equalsIgnoreCase(identifier)){
+                return node;
+            }
+        }
+        return null;
+    }
+
+    public static int getNextFreeId(){
+        return nodes.size() + 1;
+    }
 }
