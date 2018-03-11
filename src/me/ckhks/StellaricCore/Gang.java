@@ -6,13 +6,13 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
-public class Guild {
+public class Gang {
 
     // serialize
     private String name;
     private String tag;
     private UUID leader;
-    private List<GuildMember> members = new ArrayList<GuildMember>();
+    private List<GangMember> members = new ArrayList<GangMember>();
 
     private int money;
     private Map<Material, Integer> resources = new HashMap<Material, Integer>();
@@ -22,15 +22,15 @@ public class Guild {
 
     // don't need to serialize
     //// nothing yet
-    static List<Guild> guilds = new ArrayList<>();
+    static List<Gang> gangs = new ArrayList<>();
 
-    public Guild(String name, String tag, UUID leader){
+    public Gang(String name, String tag, UUID leader){
         this.name = name;
         this.tag = tag;
         this.leader = leader;
 
         this.money = 1000;
-        GuildMember m = new GuildMember(leader, 255);
+        GangMember m = new GangMember(leader, 255);
         this.addMember(m);
         this.resources.put(Material.COBBLESTONE, 100);
     }
@@ -59,11 +59,11 @@ public class Guild {
         this.leader = leader;
     }
 
-    public List<GuildMember> getMembers() {
+    public List<GangMember> getMembers() {
         return members;
     }
 
-    public void addMember(GuildMember member){
+    public void addMember(GangMember member){
         this.members.add(member);
         Bukkit.getPlayer(member.getUniqueUI()).sendMessage("You are now a member of " + this.getName());
     }
@@ -115,17 +115,17 @@ public class Guild {
         this.decor2 = decor2;
     }
 
-    public static void addGuild(Guild guild){
-        guilds.add(guild);
+    public static void addGuild(Gang gang){
+        gangs.add(gang);
     }
 
-    public static void disbandGuild(Guild guild){
-        guilds.remove(guild);
+    public static void disbandGuild(Gang gang){
+        gangs.remove(gang);
     }
 
-    public static Guild getGuild(UUID uuid){
-        for(Guild g : guilds){
-            for(GuildMember m : g.getMembers()){
+    public static Gang getGuild(UUID uuid){
+        for(Gang g : gangs){
+            for(GangMember m : g.getMembers()){
                 if(m.getUniqueUI() == uuid){
                     return g;
                 }

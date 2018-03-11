@@ -27,9 +27,12 @@ commands:
   schema:
     description: 'use schematics'
     usage: '/schema <save/load> <name>'
-  guild:
+  gang:
     description: a
-    usage: /guild
+    usage: /gang
   bandit:
     description: ya
     usage: /bandit
+  fog:
+    description: yea
+    usage: /fog <amplifier

@@ -2,13 +2,13 @@ package me.ckhks.StellaricCore;
 
 import java.util.UUID;
 
-public class GuildMember {
+public class GangMember {
 
     // serialize
     private UUID uuid;
     private int role;
 
-    public GuildMember(UUID uuid, int role){
+    public GangMember(UUID uuid, int role){
         this.uuid = uuid;
         this.role = role;
     }

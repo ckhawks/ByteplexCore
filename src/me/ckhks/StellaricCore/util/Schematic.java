@@ -1,4 +1,4 @@
-package me.ckhks.StellaricCore;
+package me.ckhks.StellaricCore.util;
 
 import com.sk89q.worldedit.*;
 import com.sk89q.worldedit.blocks.BaseBlock;
@@ -10,7 +10,8 @@ import com.sk89q.worldedit.bukkit.selections.Selection;
 import com.sk89q.worldedit.schematic.SchematicFormat;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import com.sk89q.worldedit.world.DataException;
-import org.bukkit.Bukkit;
+import me.ckhks.StellaricCore.Gang;
+import me.ckhks.StellaricCore.hooks.WorldEditHandler;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -33,7 +34,7 @@ public class Schematic {
             if (!dir.exists())
                 dir.mkdirs();
 
-            WorldEditPlugin wep = (WorldEditPlugin) Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
+            WorldEditPlugin wep = WorldEditHandler.getWorldEdit();
             WorldEdit we = wep.getWorldEdit();
 
             LocalPlayer localPlayer = wep.wrapPlayer(player);
@@ -84,7 +85,7 @@ public class Schematic {
             ItemStack mat1 = g.getDecor1();
             ItemStack mat2 = g.getDecor2();
 
-            WorldEditPlugin wep = (WorldEditPlugin) Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
+            WorldEditPlugin wep = WorldEditHandler.getWorldEdit();
             WorldEdit we = wep.getWorldEdit();
 
             Selection sel = wep.getSelection(player);
