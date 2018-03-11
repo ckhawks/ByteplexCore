@@ -39,7 +39,7 @@ public class Main extends JavaPlugin implements Listener {
     // Fired when the server enables the plugin
     @Override
     public void onEnable() {
-
+        //Jordan was here
         getLogger().info("Hi there!");
 
         // plugin dependencies setup
