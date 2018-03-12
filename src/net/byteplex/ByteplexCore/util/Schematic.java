@@ -1,4 +1,4 @@
-package me.ckhks.StellaricCore.util;
+package net.byteplex.ByteplexCore.util;
 
 import com.sk89q.worldedit.*;
 import com.sk89q.worldedit.blocks.BaseBlock;
@@ -10,8 +10,8 @@ import com.sk89q.worldedit.bukkit.selections.Selection;
 import com.sk89q.worldedit.schematic.SchematicFormat;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import com.sk89q.worldedit.world.DataException;
-import me.ckhks.StellaricCore.Gang;
-import me.ckhks.StellaricCore.hooks.WorldEditHandler;
+import net.byteplex.ByteplexCore.Gang;
+import net.byteplex.ByteplexCore.hooks.WorldEditHandler;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

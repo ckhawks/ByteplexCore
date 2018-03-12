@@ -1,4 +1,4 @@
-package me.ckhks.StellaricCore;
+package net.byteplex.ByteplexCore;
 
 public class NodeType {
 

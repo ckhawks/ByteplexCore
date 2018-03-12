@@ -1,7 +1,11 @@
-name: StellaricCore
-version: 2018.3.6.1
-author: Stellaric
-main: me.ckhks.StellaricCore.Main
+name: ByteplexCore
+version: 2018.3.12.1
+author:
+  - Stellaric
+  - WillOCN
+  - Guitaric
+  - sierek_1337
+main: net.byteplex.ByteplexCore.ByteplexCore
 depend:
   - WorldEdit
   - dynmap

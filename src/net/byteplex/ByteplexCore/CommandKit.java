@@ -1,4 +1,4 @@
-package me.ckhks.StellaricCore;
+package net.byteplex.ByteplexCore;
 
 import org.bukkit.Material;
         import org.bukkit.command.Command;

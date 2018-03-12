@@ -1,4 +1,4 @@
-package me.ckhks.StellaricCore.hooks;
+package net.byteplex.ByteplexCore.hooks;
 
 import org.bukkit.plugin.Plugin;
 import org.dynmap.DynmapAPI;

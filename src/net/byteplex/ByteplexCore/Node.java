@@ -1,7 +1,7 @@
-package me.ckhks.StellaricCore;
+package net.byteplex.ByteplexCore;
 
-import me.ckhks.StellaricCore.util.ChatFormat;
-import me.ckhks.StellaricCore.util.ChatLevel;
+import net.byteplex.ByteplexCore.util.ChatFormat;
+import net.byteplex.ByteplexCore.util.ChatLevel;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

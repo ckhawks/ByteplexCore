@@ -1,7 +1,7 @@
-package me.ckhks.StellaricCore.util;
+package net.byteplex.ByteplexCore.util;
 
-import me.ckhks.StellaricCore.Node;
-import me.ckhks.StellaricCore.hooks.DynmapHandler;
+import net.byteplex.ByteplexCore.Node;
+import net.byteplex.ByteplexCore.hooks.DynmapHandler;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.dynmap.markers.Marker;

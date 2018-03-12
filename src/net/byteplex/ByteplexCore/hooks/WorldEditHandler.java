@@ -1,4 +1,4 @@
-package me.ckhks.StellaricCore.hooks;
+package net.byteplex.ByteplexCore.hooks;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import org.bukkit.plugin.Plugin;
