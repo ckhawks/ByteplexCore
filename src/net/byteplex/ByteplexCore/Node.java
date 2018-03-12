@@ -17,7 +17,7 @@ public class Node {
 
     private Gang holder;
     private String name;
-    private String identifier;
+    private int id;
     private String description;
     private NodeType type;
 
@@ -28,6 +28,7 @@ public class Node {
     private Location defendLoc;
 
     // do not serialize
+    private String identifier;
     private List<Player> defendQueue;
     private List<Player> attackQueue;
 
@@ -43,7 +44,8 @@ public class Node {
         this.markerIcon = markerIcon;
         this.location = location;
 
-        this.identifier = "node" + NodeHandler.getNextFreeId();
+        this.id = NodeHandler.getNextFreeId();
+        this.identifier = "node" + id;
         this.hasQueuing = false;
         this.checkingQueuing = false;
 

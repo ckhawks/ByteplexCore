@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ByteplexCore:jar">
+    <output-path>$PROJECT_DIR$/../</output-path>
+    <root id="archive" name="ByteplexCore.jar">
+      <element id="module-output" name="ByteplexCore" />
+    </root>
+  </artifact>
+</component>
