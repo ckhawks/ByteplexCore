@@ -1,0 +1,38 @@
+name: ByteplexCore
+version: 2018.3.12.1
+author: Stellaric
+main: net.byteplex.ByteplexCore.ByteplexCore
+depend:
+  - WorldEdit
+  - dynmap
+commands:
+  kit:
+    description: 'Your description'
+    usage: /kit
+  strike:
+    description: 'strike a bitch'
+    usage: '/strike <player>'
+  menu:
+    description: 'get things'
+    usage: /menu
+  pad:
+    description: 'display who is on pad'
+    usage: /pad
+  setdist:
+    description: 'set distance for pad detection'
+    usage: '/setdist <int>'
+  setplayers:
+    description: 'set max players for team'
+    usage: '/setplayers <int>'
+  schema:
+    description: 'use schematics'
+    usage: '/schema <save/load> <name>'
+  gang:
+    description: a
+    usage: /gang
+  bandit:
+    description: ya
+    usage: /bandit
+  fog:
+    description: yea
+    usage: /fog <amplifier
