@@ -1,16 +1,15 @@
-package me.ckhks.StellaricCore;
+package net.byteplex.ByteplexCore;
 
 import com.mewin.WGRegionEvents.events.RegionEnterEvent;
 import com.mewin.WGRegionEvents.events.RegionLeaveEvent;
-import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import me.ckhks.StellaricCore.hooks.DynmapHandler;
-import me.ckhks.StellaricCore.hooks.WorldEditHandler;
-import me.ckhks.StellaricCore.hooks.WorldGuardHandler;
+import net.byteplex.ByteplexCore.hooks.DynmapHandler;
+import net.byteplex.ByteplexCore.hooks.WorldEditHandler;
+import net.byteplex.ByteplexCore.hooks.WorldGuardHandler;
 import me.ckhks.StellaricCore.util.*;
+import net.byteplex.ByteplexCore.util.*;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -27,10 +26,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.text.ParseException;
 import java.util.*;
 
-public class Main extends JavaPlugin implements Listener {
+public class ByteplexCore extends JavaPlugin implements Listener {
     HashMap<String, List<Player>> queues = new HashMap<>();
     int distanceAllowed = 7;
     int maxPlayers = 4;

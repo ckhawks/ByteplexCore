@@ -1,8 +1,7 @@
-package me.ckhks.StellaricCore;
+package net.byteplex.ByteplexCore;
 
-import me.ckhks.StellaricCore.util.MarkerHandler;
+import net.byteplex.ByteplexCore.util.MarkerHandler;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class NodeHandler {

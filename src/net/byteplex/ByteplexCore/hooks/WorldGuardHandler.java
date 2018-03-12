@@ -1,4 +1,4 @@
-package me.ckhks.StellaricCore.hooks;
+package net.byteplex.ByteplexCore.hooks;
 
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;

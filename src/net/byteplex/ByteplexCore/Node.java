@@ -1,4 +1,4 @@
-package me.ckhks.StellaricCore;
+package net.byteplex.ByteplexCore;
 
 
 import org.bukkit.entity.Player;

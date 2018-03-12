@@ -1,4 +1,4 @@
-package me.ckhks.StellaricCore.util;
+package net.byteplex.ByteplexCore.util;
 
 public class ChatLevel {
 
