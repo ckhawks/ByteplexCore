@@ -6,10 +6,10 @@ public class ChatFormat {
 
     private static String serverName = "BytePlex";
 
-    public static String formatExclaim(int chatLevel, String message){
+    public static String formatExclaim(int chatLevel, String message) {
         String prefix = "";
 
-        switch(chatLevel){
+        switch (chatLevel) {
             case ChatLevel.ERROR:
                 prefix = "" + ChatColor.DARK_RED + " ERROR " + ChatColor.RESET
                         + ChatColor.GRAY + "»»";
@@ -32,6 +32,14 @@ public class ChatFormat {
                 break;
             case ChatLevel.GANG:
                 prefix = "" + ChatColor.DARK_GREEN + " GANG " + ChatColor.RESET
+                        + ChatColor.GRAY + "»»";
+                break;
+            case ChatLevel.NODE:
+                prefix = "" + ChatColor.GRAY + " NODE " + ChatColor.RESET
+                        + ChatColor.GRAY + "»»";
+                break;
+            case ChatLevel.DEATH:
+                prefix = "" + ChatColor.GRAY + " DEATH " + ChatColor.RESET
                         + ChatColor.GRAY + "»»";
                 break;
         }

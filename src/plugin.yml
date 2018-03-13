@@ -36,3 +36,6 @@ commands:
   fog:
     description: yea
     usage: /fog <amplifier
+  db:
+    description: yea
+    usage: /db yea

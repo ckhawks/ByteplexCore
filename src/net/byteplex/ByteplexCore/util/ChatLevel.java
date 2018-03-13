@@ -8,5 +8,7 @@ public class ChatLevel {
     public static final int SERVER = 4;
     public static final int ERRORCRITICAL = 5;
     public static final int GANG = 6;
+    public static final int NODE = 7;
+    public static final int DEATH = 8;
 
 }

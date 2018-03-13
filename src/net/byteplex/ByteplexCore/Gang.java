@@ -24,7 +24,7 @@ public class Gang {
     //// nothing yet
     static List<Gang> gangs = new ArrayList<>();
 
-    public Gang(String name, String tag, UUID leader){
+    public Gang(String name, String tag, UUID leader) {
         this.name = name;
         this.tag = tag;
         this.leader = leader;
@@ -35,11 +35,11 @@ public class Gang {
         this.resources.put(Material.COBBLESTONE, 100);
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -63,7 +63,7 @@ public class Gang {
         return members;
     }
 
-    public void addMember(GangMember member){
+    public void addMember(GangMember member) {
         this.members.add(member);
         Bukkit.getPlayer(member.getUniqueUI()).sendMessage("You are now a member of " + this.getName());
     }
@@ -77,19 +77,19 @@ public class Gang {
         this.money = this.money + money;
     }
 
-    public Map<Material, Integer> getResources(){
+    public Map<Material, Integer> getResources() {
         return resources;
     }
 
-    public String exportResources(){
+    public String exportResources() {
         return resources.toString();
     }
 
-    public int checkResource(Material material){
+    public int checkResource(Material material) {
         return resources.get(material);
     }
 
-    public void changeResource(Material material, int i){
+    public void changeResource(Material material, int i) {
         resources.replace(material, i + resources.get(material));
     }
 
@@ -100,6 +100,7 @@ public class Gang {
     public void setDecor1(Material decor1) {
         this.decor1 = new ItemStack(decor1);
     }
+
     public void setDecor1(ItemStack decor1) {
         this.decor1 = decor1;
     }
@@ -111,22 +112,23 @@ public class Gang {
     public void setDecor2(Material decor2) {
         this.decor2 = new ItemStack(decor2);
     }
+
     public void setDecor2(ItemStack decor2) {
         this.decor2 = decor2;
     }
 
-    public static void addGuild(Gang gang){
+    public static void addGuild(Gang gang) {
         gangs.add(gang);
     }
 
-    public static void disbandGuild(Gang gang){
+    public static void disbandGuild(Gang gang) {
         gangs.remove(gang);
     }
 
-    public static Gang getGuild(UUID uuid){
-        for(Gang g : gangs){
-            for(GangMember m : g.getMembers()){
-                if(m.getUniqueUI() == uuid){
+    public static Gang getGuild(UUID uuid) {
+        for (Gang g : gangs) {
+            for (GangMember m : g.getMembers()) {
+                if (m.getUniqueUI() == uuid) {
                     return g;
                 }
             }

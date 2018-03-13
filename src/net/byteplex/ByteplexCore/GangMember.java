@@ -8,21 +8,21 @@ public class GangMember {
     private UUID uuid;
     private int role;
 
-    public GangMember(UUID uuid, int role){
+    public GangMember(UUID uuid, int role) {
         this.uuid = uuid;
         this.role = role;
     }
 
-    public UUID getUniqueUI(){
+    public UUID getUniqueUI() {
         return this.uuid;
     }
 
-    public int getRole(){
+    public int getRole() {
         return this.role;
     }
 
     // could change this to use a GuildRole object
-    public void setRole(int role){
+    public void setRole(int role) {
         this.role = role;
     }
 }

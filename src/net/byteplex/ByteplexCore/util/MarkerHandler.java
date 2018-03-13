@@ -19,12 +19,12 @@ public class MarkerHandler {
     static Map<Node, Marker> nodeMarkers = new HashMap<>();
 
     // TODO add once nodes r in place, argument would be list of nodes
-    public static void setupMarkers(ArrayList<Node> nodes){
+    public static void setupMarkers(ArrayList<Node> nodes) {
         MarkerAPI m = DynmapHandler.getMarkerapi();
         MarkerSet poi = m.getMarkerSet("Points of Interest");
 
 
-        for(Node node : nodes){
+        for (Node node : nodes) {
             MarkerIcon ico = m.getMarkerIcon(node.getMarkerIcon());
             Location loc = node.getLocation();
             double x = loc.getX();
@@ -35,7 +35,7 @@ public class MarkerHandler {
         }
     }
 
-    public static void addNodeMarker(Node node){
+    public static void addNodeMarker(Node node) {
         MarkerAPI m = DynmapHandler.getMarkerapi();
         MarkerSet poi = m.getMarkerSet("Points of Interest");
 
@@ -49,12 +49,12 @@ public class MarkerHandler {
     }
 
     // this shouldn't get used too often...
-    public static void removeNodeMarker(Node node){
+    public static void removeNodeMarker(Node node) {
         nodeMarkers.remove(node);
     }
 
     // will need to be expanded when we add different markers from just "Bandit" (perhaps we expand this to like a PlayerMarker class that contains data of like why they have the marker and for how long and shit
-    public static void addPlayerMarker(Player player){
+    public static void addPlayerMarker(Player player) {
         MarkerAPI m = DynmapHandler.getMarkerapi();
         MarkerSet set = m.getMarkerSet("Points of Interest");
         MarkerIcon ico = m.getMarkerIcon("skull");
@@ -68,8 +68,8 @@ public class MarkerHandler {
     }
 
     // checks if player has a marker attached to them, and if they do, it moves it to correct location (the player's current position)
-    public static void checkPlayerMarker(Player player){
-        if(playerMarkers.containsKey(player)){
+    public static void checkPlayerMarker(Player player) {
+        if (playerMarkers.containsKey(player)) {
             Marker m = playerMarkers.get(player);
             Location loc = player.getLocation();
             double x = loc.getX();
@@ -79,7 +79,7 @@ public class MarkerHandler {
         }
     }
 
-    public static void removePlayerMarker(Player player){
+    public static void removePlayerMarker(Player player) {
         playerMarkers.remove(player);
     }
 }
