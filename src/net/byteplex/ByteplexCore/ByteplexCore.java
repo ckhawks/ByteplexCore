@@ -25,6 +25,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.sql.SQLException;
 import java.util.*;
 
 public class ByteplexCore extends JavaPlugin implements Listener {
@@ -40,25 +41,33 @@ public class ByteplexCore extends JavaPlugin implements Listener {
         getLogger().info("Hi there!");
 
         // plugin dependencies setup
+        // setup worldedit connection
         if (WorldEditHandler.setupWorldEdit()) {
             getLogger().info("Successfully Enabled WorldEdit support!");
         } else {
             getLogger().info("Failed to enable WorldEdit support!");
         }
 
+        // setup worldguard connection
         if (WorldGuardHandler.setupWorldGuard()) {
             getLogger().info("Successfully Enabled WorldGuard support!");
         } else {
             getLogger().info("Failed to enable WorldGuard support!");
         }
 
+        // setup dynmap connection
         if (DynmapHandler.setupDynmap()) {
             getLogger().info("Successfully Enabled Dynmap support!");
         } else {
             getLogger().info("Failed to enable Dynmap support!");
         }
 
-        ParticleKit.setupParticleKit(this);
+        // setup mysql
+        try {
+            MySQLHandler.connect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         // Register our command "kit" (set an instance of your command class as executor)
         this.getCommand("kit").setExecutor(new CommandKit());
@@ -71,11 +80,21 @@ public class ByteplexCore extends JavaPlugin implements Listener {
         NodeHandler.addNode(new Node(null, "Refinery", "Some description", NodeType.REFINERY, "factory",
                 new Location(getServer().getWorlds().get(0), -290.0, 67, 81), new Location(getServer().getWorlds().get(0), -281, 68, 71), new Location(getServer().getWorlds().get(0), -287, 69, 85)));
 
+
     }
 
     // fired when the server stops and disables all plugin
     @Override
     public void onDisable() {
+
+        // close mysql connection
+        try {
+            MySQLHandler.disconnect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
         getLogger().info("Goodbye world!");
     }
 
