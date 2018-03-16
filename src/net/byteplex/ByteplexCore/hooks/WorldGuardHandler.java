@@ -11,7 +11,7 @@ public class WorldGuardHandler {
     private static WorldGuardPlugin worldGuard = null;
     private static boolean worldGuardSupport = false;
 
-    public static boolean setupWorldGuard(){
+    public static boolean setupWorldGuard() {
         Plugin plugin = getServer().getPluginManager().getPlugin("WorldGuard");
         if (plugin == null || !(plugin instanceof WorldGuardPlugin))
             return false;

@@ -96,7 +96,7 @@ public class MySQLHandler {
         try {
             Statement stmt = connection.createStatement();
             stmt.executeUpdate(query);
-        } catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
@@ -113,7 +113,7 @@ public class MySQLHandler {
                     System.out.println("Gang name: " + result.getString("gangname"));
                     System.out.println("Gang tag: " + result.getString("gangtag"));
 
-                    UUID leaderUUID = UUID.fromString(result.getString("gangleader").replaceFirst (
+                    UUID leaderUUID = UUID.fromString(result.getString("gangleader").replaceFirst(
                             "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)",
                             "$1-$2-$3-$4-$5")
                     );

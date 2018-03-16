@@ -72,7 +72,7 @@ public class Gang {
         this.members.add(member);
 
         // usually will be null when guilds are loaded in on server start
-        if(Bukkit.getPlayer(member.getUniqueUI()) != null){
+        if (Bukkit.getPlayer(member.getUniqueUI()) != null) {
             Bukkit.getPlayer(member.getUniqueUI()).sendMessage("You are now a member of " + this.getName());
         }
     }
@@ -131,19 +131,19 @@ public class Gang {
 
         // add gang to database
         try {
-            MySQLHandler.doPostQuery("INSERT INTO gangs (gangid, gangname, gangtag, gangleader) VALUES ('" + gangs.size() + "', '" + gang.getName() + "', '" + gang.getTag() + "', '" + gang.getLeader().toString() + "');");
+            MySQLHandler.doPostQuery("INSERT INTO gangs (gangid, gangname, gangtag, gangleader) VALUES ('" + (gangs.size() - 1) + "', '" + gang.getName() + "', '" + gang.getTag() + "', '" + gang.getLeader().toString() + "');");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public static void loadGuilds(){
+    public static void loadGuilds() {
         try {
             ResultSet result = MySQLHandler.doGetQuery("SELECT * FROM gangs;");
 
             if (result != null) {
                 int i = 0;
-                while(result.next()){
+                while (result.next()) {
                     String name, tag, leader;
                     int id;
                     UUID leaderUUID;
@@ -152,13 +152,13 @@ public class Gang {
                     tag = result.getString("gangtag");
                     leader = result.getString("gangleader");
                     id = result.getInt("gangid");
-                    leaderUUID = UUID.fromString(leader.replaceFirst (
+                    leaderUUID = UUID.fromString(leader.replaceFirst(
                             "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)",
                             "$1-$2-$3-$4-$5")
                     );
 
-                    Bukkit.getServer().broadcastMessage(ChatFormat.formatExclaim(ChatLevel.SERVER, "Loaded gang [" + tag + "] " + name + " (" + id + "), owned by " + Bukkit.getOfflinePlayer(leaderUUID).getName() + " (" + leader + ")."));
-                    Bukkit.getServer().broadcastMessage(ChatFormat.formatExclaim(ChatLevel.SERVER, "Database ID=" + id + " Arraylist ID=" + i));
+                    Bukkit.getLogger().info(ChatFormat.formatExclaim(ChatLevel.SERVER, "Loaded gang [" + tag + "] " + name + " (" + id + "), owned by " + Bukkit.getOfflinePlayer(leaderUUID).getName() + " (" + leader + ")."));
+                    Bukkit.getLogger().info(ChatFormat.formatExclaim(ChatLevel.SERVER, "Database ID=" + id + " Arraylist ID=" + i));
                     gangs.add(new Gang(name, tag, leaderUUID));
                     i++;
                 }
