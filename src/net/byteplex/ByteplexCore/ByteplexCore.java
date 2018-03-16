@@ -69,6 +69,9 @@ public class ByteplexCore extends JavaPlugin implements Listener {
             e.printStackTrace();
         }
 
+        // after mysql connected we can load guilds
+        Gang.loadGuilds();
+
         // Register our command "kit" (set an instance of your command class as executor)
         this.getCommand("kit").setExecutor(new CommandKit());
 
@@ -555,7 +558,8 @@ public class ByteplexCore extends JavaPlugin implements Listener {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, amplifier, false, false, null));
                 player.sendMessage(ChatFormat.formatExclaim(ChatLevel.INFO, "Added prototype fog to " + player.getName()));
             } else if (label.equalsIgnoreCase("db")) {
-                MySQLHandler.test();
+                player.sendMessage("Your UUID: " + player.getUniqueId().toString());
+                MySQLHandler.printAllGangs();
             }
         } else {
             sender.sendMessage("Player commands only!");

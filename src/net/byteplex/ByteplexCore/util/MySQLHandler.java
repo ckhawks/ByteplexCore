@@ -1,6 +1,7 @@
 package net.byteplex.ByteplexCore.util;
 
 import net.byteplex.ByteplexCore.ByteplexCore;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -21,29 +22,8 @@ public class MySQLHandler {
     private static FileConfiguration mysqlConfig;
     private static File mysqlConfigFile;
 
-    public static void test() {
-
-
-        ResultSet result;
-        try {
-            connect();
-            result = doQuery("SELECT * FROM gangs;");
-            if (result == null) {
-                // do nothing pl0x
-            } else {
-                while (result.next()) {
-                    System.out.println("Gang ID: " + result.getInt("gangid"));
-                    System.out.println("Gang name: " + result.getString("gangname"));
-                    System.out.println("Gang tag: " + result.getString("gangtag"));
-                    UUID leaderUUID = UUID.fromString(result.getString("gangleader"));
-                    System.out.println("Leader UUID: " + leaderUUID.toString());
-                }
-            }
-            disconnect();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public static Connection getConnection() {
+        return connection;
     }
 
     public static void loadConfig() {
@@ -74,7 +54,7 @@ public class MySQLHandler {
         username = mysqlConfig.getString("username");
         password = mysqlConfig.getString("password");
         port = mysqlConfig.getInt("port");
-        
+
         try {
             synchronized (plugin) {
                 if (getConnection() != null && !getConnection().isClosed()) {
@@ -102,8 +82,7 @@ public class MySQLHandler {
 
     }
 
-    public static ResultSet doQuery(String query) throws SQLException {
-        //Class.forName("com.mysql.jdbc.Driver");
+    public static ResultSet doGetQuery(String query) throws SQLException {
         try {
             Statement stmt = connection.createStatement();
             return stmt.executeQuery(query);
@@ -113,7 +92,39 @@ public class MySQLHandler {
         return null;
     }
 
-    public static Connection getConnection() {
-        return connection;
+    public static void doPostQuery(String query) throws SQLException {
+        try {
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate(query);
+        } catch (Exception e){
+
+        }
+    }
+
+    public static void printAllGangs() {
+        ResultSet result;
+        try {
+            result = doGetQuery("SELECT * FROM gangs;");
+            if (result == null) {
+                // do nothing pl0x
+            } else {
+                while (result.next()) {
+                    System.out.println("Gang ID: " + result.getInt("gangid"));
+                    System.out.println("Gang name: " + result.getString("gangname"));
+                    System.out.println("Gang tag: " + result.getString("gangtag"));
+
+                    UUID leaderUUID = UUID.fromString(result.getString("gangleader").replaceFirst (
+                            "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)",
+                            "$1-$2-$3-$4-$5")
+                    );
+
+                    System.out.println("Leader UUID: " + leaderUUID.toString());
+
+                    System.out.println("Parsed uuid: " + Bukkit.getOfflinePlayer(leaderUUID).getName());
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
