@@ -7,6 +7,7 @@
     </content>
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="WGRegionEvents-1.2.1" level="project" />
     <orderEntry type="library" name="dynmap-2.5" level="project" />
   </component>
 </module>
