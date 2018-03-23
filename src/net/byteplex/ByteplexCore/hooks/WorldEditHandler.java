@@ -10,7 +10,7 @@ public class WorldEditHandler {
     private static WorldEditPlugin worldEdit = null;
     private static boolean worldEditSupport = false;
 
-    public static boolean setupWorldEdit(){
+    public static boolean setupWorldEdit() {
         Plugin plugin = getServer().getPluginManager().getPlugin("WorldEdit");
         if (plugin == null || !(plugin instanceof WorldEditPlugin))
             return false;

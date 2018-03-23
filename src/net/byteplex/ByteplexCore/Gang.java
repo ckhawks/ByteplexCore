@@ -1,9 +1,14 @@
 package net.byteplex.ByteplexCore;
 
+import net.byteplex.ByteplexCore.util.ChatFormat;
+import net.byteplex.ByteplexCore.util.ChatLevel;
+import net.byteplex.ByteplexCore.util.MySQLHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
 public class Gang {
@@ -65,7 +70,11 @@ public class Gang {
 
     public void addMember(GangMember member) {
         this.members.add(member);
-        Bukkit.getPlayer(member.getUniqueUI()).sendMessage("You are now a member of " + this.getName());
+
+        // usually will be null when guilds are loaded in on server start
+        if (Bukkit.getPlayer(member.getUniqueUI()) != null) {
+            Bukkit.getPlayer(member.getUniqueUI()).sendMessage("You are now a member of " + this.getName());
+        }
     }
 
     public int getMoney() {
@@ -119,6 +128,45 @@ public class Gang {
 
     public static void addGuild(Gang gang) {
         gangs.add(gang);
+
+        // add gang to database
+        try {
+            MySQLHandler.doPostQuery("INSERT INTO gangs (gangid, gangname, gangtag, gangleader) VALUES ('" + (gangs.size() - 1) + "', '" + gang.getName() + "', '" + gang.getTag() + "', '" + gang.getLeader().toString() + "');");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void loadGuilds() {
+        try {
+            ResultSet result = MySQLHandler.doGetQuery("SELECT * FROM gangs;");
+
+            if (result != null) {
+                int i = 0;
+                while (result.next()) {
+                    String name, tag, leader;
+                    int id;
+                    UUID leaderUUID;
+
+                    name = result.getString("gangname");
+                    tag = result.getString("gangtag");
+                    leader = result.getString("gangleader");
+                    id = result.getInt("gangid");
+                    leaderUUID = UUID.fromString(leader.replaceFirst(
+                            "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)",
+                            "$1-$2-$3-$4-$5")
+                    );
+
+                    Bukkit.getLogger().info(ChatFormat.formatExclaim(ChatLevel.SERVER, "Loaded gang [" + tag + "] " + name + " (" + id + "), owned by " + Bukkit.getOfflinePlayer(leaderUUID).getName() + " (" + leader + ")."));
+                    Bukkit.getLogger().info(ChatFormat.formatExclaim(ChatLevel.SERVER, "Database ID=" + id + " Arraylist ID=" + i));
+                    gangs.add(new Gang(name, tag, leaderUUID));
+                    i++;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void disbandGuild(Gang gang) {
