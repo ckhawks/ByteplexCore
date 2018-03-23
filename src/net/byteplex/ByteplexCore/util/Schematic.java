@@ -79,7 +79,7 @@ public class Schematic {
         }
     }
 
-    public static void fixSelection(Player player){
+    public static void fixSelection(Player player) {
         try {
             Gang g = Gang.getGuild(player.getUniqueId());
             ItemStack mat1 = g.getDecor1();
@@ -95,7 +95,6 @@ public class Schematic {
             EditSession editSession = localSession.createEditSession(localPlayer);
 
 
-
             Set<BaseBlock> a = new HashSet<BaseBlock>();
 
 
@@ -105,7 +104,7 @@ public class Schematic {
             Set<BaseBlock> b = new HashSet<BaseBlock>();
             b.add(new BaseBlock(Material.PUMPKIN.getId()));
             editSession.replaceBlocks(sel.getRegionSelector().getRegion(), b, new BaseBlock(mat2.getType().getId()));
-        } catch (MaxChangedBlocksException | IncompleteRegionException ex){
+        } catch (MaxChangedBlocksException | IncompleteRegionException ex) {
             ex.printStackTrace();
         }
     }
