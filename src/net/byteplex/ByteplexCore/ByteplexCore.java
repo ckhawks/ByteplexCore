@@ -212,7 +212,6 @@ public class ByteplexCore extends JavaPlugin implements Listener {
         }
     }
     */
-
     // Chainmail cleaner
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e) {
