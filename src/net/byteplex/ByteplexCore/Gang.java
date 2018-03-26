@@ -76,7 +76,7 @@ public class Gang {
 
         // usually will be null when guilds are loaded in on server start
         if (Bukkit.getPlayer(member.getUniqueUI()) != null) {
-            Bukkit.getPlayer(member.getUniqueUI()).sendMessage("You are now a member of " + this.getName());
+            Bukkit.getPlayer(member.getUniqueUI()).sendMessage(ChatFormat.formatExclaim(ChatLevel.GANG, "You are now a member of " + this.getName()));
         }
     }
 
@@ -197,7 +197,7 @@ public class Gang {
     }
 
     public static boolean nameExists(String name) {
-        for(int i = 0; i < gangs.size(); i++){
+        for (int i = 0; i < gangs.size(); i++){
             if(gangs.get(i).getName().equalsIgnoreCase(name)){
                 return true;
             }
@@ -206,7 +206,7 @@ public class Gang {
     }
 
     public static boolean tagExists(String tag) {
-        for(int i = 0; i < gangs.size(); i++){
+        for (int i = 0; i < gangs.size(); i++){
             if(gangs.get(i).getTag().equalsIgnoreCase(tag)){
                 return true;
             }

@@ -3,31 +3,26 @@ package net.byteplex.ByteplexCore;
 import com.mewin.WGRegionEvents.events.RegionEnterEvent;
 import com.mewin.WGRegionEvents.events.RegionLeaveEvent;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import net.byteplex.ByteplexCore.commands.MenuCommand;
+import net.byteplex.ByteplexCore.handlers.ChatHandler;
 import net.byteplex.ByteplexCore.hooks.DynmapHandler;
 import net.byteplex.ByteplexCore.hooks.WorldEditHandler;
 import net.byteplex.ByteplexCore.hooks.WorldGuardHandler;
 import net.byteplex.ByteplexCore.util.*;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import java.sql.SQLException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
 
 public class ByteplexCore extends JavaPlugin implements Listener {
     HashMap<String, List<Player>> queues = new HashMap<>();
@@ -77,6 +72,7 @@ public class ByteplexCore extends JavaPlugin implements Listener {
         ch.registerCommands();
 
         getServer().getPluginManager().registerEvents(this, this);
+        getServer().getPluginManager().registerEvents(new ChatHandler(), this);
 
         // was used for a prototype on old world
         playersSign = getServer().getWorlds().get(0).getBlockAt(-9, 72, 145);
