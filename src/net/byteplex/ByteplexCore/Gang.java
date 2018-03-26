@@ -4,6 +4,8 @@ import net.byteplex.ByteplexCore.util.ChatFormat;
 import net.byteplex.ByteplexCore.util.ChatLevel;
 import net.byteplex.ByteplexCore.util.MySQLHandler;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -18,6 +20,7 @@ public class Gang {
     private String tag;
     private UUID leader;
     private List<GangMember> members = new ArrayList<GangMember>();
+    private List<Player> invitedPlayers = new ArrayList<>();
 
     private int money;
     private Map<Material, Integer> resources = new HashMap<Material, Integer>();
@@ -73,7 +76,7 @@ public class Gang {
 
         // usually will be null when guilds are loaded in on server start
         if (Bukkit.getPlayer(member.getUniqueUI()) != null) {
-            Bukkit.getPlayer(member.getUniqueUI()).sendMessage("You are now a member of " + this.getName());
+            Bukkit.getPlayer(member.getUniqueUI()).sendMessage(ChatFormat.formatExclaim(ChatLevel.GANG, "You are now a member of " + this.getName()));
         }
     }
 
@@ -184,5 +187,47 @@ public class Gang {
         return null;
     }
 
+    public static Gang getGuildFromTag(String tag){
+        for(Gang g : gangs){
+            if(ChatColor.stripColor(g.getTag()).equalsIgnoreCase(tag)){
+                return g;
+            }
+        }
+        return null;
+    }
 
+    public static boolean nameExists(String name) {
+        for (int i = 0; i < gangs.size(); i++){
+            if(gangs.get(i).getName().equalsIgnoreCase(name)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean tagExists(String tag) {
+        for (int i = 0; i < gangs.size(); i++){
+            if(gangs.get(i).getTag().equalsIgnoreCase(tag)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<Player> getInvitedPlayers() {
+        return invitedPlayers;
+    }
+
+    public boolean addInvitedPlayer(Player player){
+        if(invitedPlayers.contains(player)){
+            return false;
+        } else {
+            invitedPlayers.add(player);
+            return true;
+        }
+    }
+
+    public void removeInvitedPlayer(Player player){
+        invitedPlayers.remove(player);
+    }
 }
